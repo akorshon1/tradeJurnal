@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade Journal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f7f9fc;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2, h3 {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .trade-list {
+      margin-top: 20px;
+    }
+    .trade-item {
+      background: #f1f1f1;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .details {
+      display: none;
+      margin-top: 10px;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .toggle-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+    .toggle-btn:hover {
+      background: #0056b3;
+    }
+
+    .clear-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+    .clear-btn:hover {
+      background: #c82333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Trade Journal</h2>
+  <form id="tradeForm">
+    <div class="form-group">
+      <label for="pair">Trading Pair:</label>
+      <select id="pair" required>
+        <option>Select Pairs</option>
+        <!-- <option value="">Major Pairs (Most Traded & Highly Liquid)</option>
+        <option value="EUR/USD">EUR/USD</option>
+        <option value="GBP/USD">GBP/USD</option>
+        <option value="USD/JPY">USD/JPY</option>
+
+        <option value="EUR/USD">USD/CHF</option>
+        <option value="GBP/USD">AUD/USD</option>
+        <option value="USD/JPY">USD/CAD</option>
+         -->
+
+
+
+         <!-- Popular Forex Pairs --><!-- Commodities -->
+<option style="color: rgb(255, 174, 0); font-size: 22px;">XAU/USD</option> <!-- Gold -->
+
+<!-- Cryptocurrencies -->
+<option style="color: rgb(25, 0, 255); font-size: 22px;">BTC/USD</option>
+<option style="color: #c82333; font-size: 20px;">Forex Pairs.......</option>
+<option>EUR/USD</option>
+<option>GBP/USD</option>
+<option>USD/JPY</option>
+<option>USD/CHF</option>
+<option>AUD/USD</option>
+<option>USD/CAD</option>
+<option>NZD/USD</option>
+<option>EUR/GBP</option>
+<option>EUR/JPY</option>
+<option>GBP/JPY</option>
+
+
+
+<!-- Popular US Stocks -->
+<option style="color: #c82333; font-size: 20px;">Indices.....</option> <!-- Apple -->
+<option>S&P 500</option> <!-- Microsoft -->
+<option>DXY</option> <!-- Google (Alphabet) -->
+<option>US 100</option> <!-- Amazon -->
+<option>US 30</option> <!-- Tesla -->
+<option>NAS 100</option> <!-- NVIDIA -->
+<option>US OIL</option> <!-- Meta (Facebook) -->
+<option>SILVER</option> <!-- Berkshire Hathaway -->
+<option>NDQ</option> <!-- JPMorgan Chase -->
+<option>DJI</option> <!-- Visa -->
+
+    
+
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="action">Action:</label>
+      <select id="action" required>
+        <option value="Buy">Buy</option>
+        <option value="Sell">Sell</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="entry">Entry Price:</label>
+      <input type="text" id="entry" required>
+    </div>
+    <div class="form-group">
+      <label for="sl">Stop Loss:</label>
+      <input type="text" id="sl" required>
+    </div>
+    <div class="form-group">
+      <label for="tp">Take Profit:</label>
+      <input type="text" id="tp" required>
+    </div>
+    <div class="form-group">
+      <label for="note">Note:</label>
+      <textarea id="note" rows="3"></textarea>
+    </div>
+    <button type="submit">Save Trade</button>
+  </form>
+  
+  <h3>Trade History</h3>
+  <button onclick="downloadLatestTrade()">Download Latest Trade</button>
+  <div class="trade-list" id="tradeList"></div>
+  <button onclick="downloadAllTrades()">Download All Trades</button>
+  <button class="clear-btn" onclick="clearTradeList()">Clear List</button>
+</div>
+
+<h4>About Developers:</h4>
+<img src="https://scontent.fjed2-1.fna.fbcdn.net/v/t39.30808-1/483763164_655788880287552_7623321752647940933_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_ohc=N9YwNDxskRgQ7kNvgGqvAwU&_nc_oc=AdgUkmRX0eNEq2Xu3gCVQqsr4YkmyPV10ErG-VYKmBM6-C7XkGuHgoYYPJqq6O1Yx9-UW1eYPXPhf2nwdzI1vTr3&_nc_zt=24&_nc_ht=scontent.fjed2-1.fna&_nc_gid=x65w4Jt5nYRtjB37VbM9fA&oh=00_AYEY3uK9uaoC8CzdgwMvKyoxFjxZ6MBDfgImKU86DJLfVQ&oe=67DBE0A2" alt="" style="width: 50px; height: 50px;">
+<p>Hello iam <strong>Rakibul Hasan</strong> a forex trader scince 2020.Iam also a developer. This website is made for help new Trader who cant know how to Journal her every trade . so he can use it. Plese subscribe Trader kako : <a href="https://www.youtube.com/@TraderKako" target="_blank">Trader Kako youtube channel</a> Thanks every one </p>
+<script>
+  let trades = [];
+
+  document.getElementById("tradeForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    const trade = {
+      date: new Date().toLocaleString(),
+      pair: document.getElementById("pair").value,
+      action: document.getElementById("action").value,
+      entry: document.getElementById("entry").value,
+      sl: document.getElementById("sl").value,
+      tp: document.getElementById("tp").value,
+      note: document.getElementById("note").value
+    };
+    trades.push(trade);
+    updateTradeList();
+    document.getElementById("tradeForm").reset();
+  });
+
+  function updateTradeList() {
+    const list = document.getElementById("tradeList");
+    list.innerHTML = "";
+    trades.forEach((trade, index) => {
+      const tradeItem = document.createElement("div");
+      tradeItem.className = "trade-item";
+      tradeItem.innerHTML = `
+        <strong>${trade.date} - ${trade.pair}</strong>
+        <button class="toggle-btn" onclick="toggleDetails(${index})">Details</button>
+        <div class="details" id="details-${index}">
+          <p>Action: ${trade.action}</p>
+          <p>Entry: ${trade.entry} | SL: ${trade.sl} | TP: ${trade.tp}</p>
+          <p>Note: ${trade.note}</p>
+        </div>
+      `;
+      list.appendChild(tradeItem);
+    });
+  }
+
+  function toggleDetails(index) {
+    const details = document.getElementById(`details-${index}`);
+    details.style.display = details.style.display === "block" ? "none" : "block";
+  }
+
+  function downloadLatestTrade() {
+    if (trades.length === 0) return alert("No trades available.");
+    const trade = trades[trades.length - 1];
+    const text = `Date: ${trade.date}\nPair: ${trade.pair}\nAction: ${trade.action}\nEntry: ${trade.entry}\nSL: ${trade.sl}\nTP: ${trade.tp}\nNote: ${trade.note}`;
+    downloadTextFile(text, "latest_trade.txt");
+  }
+
+  function downloadAllTrades() {
+    if (trades.length === 0) return alert("No trades available.");
+    let text = trades.map(trade => `Date: ${trade.date}\nPair: ${trade.pair}\nAction: ${trade.action}\nEntry: ${trade.entry}\nSL: ${trade.sl}\nTP: ${trade.tp}\nNote: ${trade.note}\n----------------------`).join("\n");
+    downloadTextFile(text, "all_trades.txt");
+  }
+
+  function downloadTextFile(content, filename) {
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+
+  }
+  
+
+  function clearTradeList() {
+    trades = [];
+    updateTradeList();
+  }
+</script>
+
+</body>
+</html>
